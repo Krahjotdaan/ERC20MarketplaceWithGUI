@@ -53,7 +53,7 @@ def log_loop_purchase(event_filter, poll_interval):
         time.sleep(poll_interval)
 
 
-event_filter_list_lot = MARKETPLACE.events.AddProposal.create_filter(fromBlock="latest")
-event_filter_cancel = MARKETPLACE.events.FinishProposal.create_filter(fromBlock="latest")
-event_filter_change_price = MARKETPLACE.events.Transfer.create_filter(fromBlock="latest")
-event_filter_purchase = MARKETPLACE.events.Approval.create_filter(fromBlock="latest")
+event_filter_list_lot = MARKETPLACE.events.ListLot.create_filter(fromBlock="latest")
+event_filter_cancel = MARKETPLACE.events.Cancel.create_filter(fromBlock="latest")
+event_filter_change_price = MARKETPLACE.events.ChangePrice.create_filter(fromBlock="latest")
+event_filter_purchase = MARKETPLACE.events.Purchase.create_filter(fromBlock="latest")

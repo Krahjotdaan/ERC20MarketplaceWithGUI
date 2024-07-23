@@ -1,5 +1,5 @@
 from threading import Thread
-from event_trackers import *
+from application.event_trackers import *
 
 
 thread_list_lot = Thread(target=log_loop_list_lot, args=(event_filter_list_lot, 10))
