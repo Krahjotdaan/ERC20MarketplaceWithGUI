@@ -1,5 +1,5 @@
-from application.menu import event_tracking_setup
-from application.event_threads import *
+from menu import event_tracking_setup
+from event_trackers import thread_list_lot, thread_cancel, thread_change_price, thread_purchase
 
 
 def main():

@@ -1,4 +1,5 @@
 import time
+from threading import Thread
 from keys import PRINT_EVENT, MARKETPLACE
 
 
@@ -57,3 +58,8 @@ event_filter_list_lot = MARKETPLACE.events.ListLot.create_filter(fromBlock="late
 event_filter_cancel = MARKETPLACE.events.Cancel.create_filter(fromBlock="latest")
 event_filter_change_price = MARKETPLACE.events.ChangePrice.create_filter(fromBlock="latest")
 event_filter_purchase = MARKETPLACE.events.Purchase.create_filter(fromBlock="latest")
+
+thread_list_lot = Thread(target=log_loop_list_lot, args=(event_filter_list_lot, 10))
+thread_cancel = Thread(target=log_loop_cancel, args=(event_filter_cancel, 10))
+thread_change_price = Thread(target=log_loop_change_price, args=(event_filter_change_price, 10))
+thread_purchase = Thread(target=log_loop_purchase, args=(event_filter_purchase, 10))

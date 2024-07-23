@@ -11,8 +11,8 @@ false = False
 
 PRINT_EVENT = True
 
-#MARKETPLACE_ABI = None
+MARKETPLACE_ABI = None
 
 W3 = Web3(HTTPProvider(PROVIDER))
 
-#MARKETPLACE = W3.eth.contract(address=marketplace, abi=MARKETPLACE_ABI)
+MARKETPLACE = W3.eth.contract(address=marketplace, abi=MARKETPLACE_ABI)
