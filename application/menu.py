@@ -1,5 +1,5 @@
 from keys import PRINT_EVENT
-from marketplace_functions import *
+from application.marketplace_functions import *
 
 
 def event_tracking_setup():
