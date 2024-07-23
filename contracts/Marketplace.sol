@@ -43,7 +43,7 @@ contract Marketplace {
     /// @notice contains all lots
     mapping(uint256 => Lot) public list;
 
-    event ListLot(uint256 lotId, address owner, address tokenAddress, uint256 indexed price, uint256 indexed  amount);
+    event ListLot(uint256 lotId, address owner, address tokenAddress, uint256 indexed price, uint256 indexed amount);
     event Cancel(uint256 lotId, uint256 indexed amount);
     event ChangePrice(uint256 lotId, uint256 indexed oldPrice, uint256 indexed newPrice);
     event Purchase(uint256 lotId, address tokenAddress, uint256 indexed price, uint256 indexed amount, address indexed customer);
