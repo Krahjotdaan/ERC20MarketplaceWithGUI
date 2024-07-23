@@ -35,7 +35,7 @@ def list_lot():
 
     transaction = MARKETPLACE.functions.listLot(token_address, price, amount).build_transaction({
         'from': WALLET_ADDRESS,
-        'chainId': 11155111,
+        'chainId': 17000,
         'gas': 300000,
         'maxFeePerGas': W3.eth.gas_price + 300000,
         'nonce': W3.eth.get_transaction_count(WALLET_ADDRESS)
@@ -58,7 +58,7 @@ def cancel():
 
     transaction = MARKETPLACE.functions.cancel(id, amount).build_transaction({
         'from': WALLET_ADDRESS,
-        'chainId': 11155111,
+        'chainId': 17000,
         'gas': 300000,
         'maxFeePerGas': W3.eth.gas_price + 300000,
         'nonce': W3.eth.get_transaction_count(WALLET_ADDRESS)
@@ -81,7 +81,7 @@ def change_price():
 
     transaction = MARKETPLACE.functions.changePrice(id, new_price).build_transaction({
         'from': WALLET_ADDRESS,
-        'chainId': 11155111,
+        'chainId': 17000,
         'gas': 300000,
         'maxFeePerGas': W3.eth.gas_price + 300000,
         'nonce': W3.eth.get_transaction_count(WALLET_ADDRESS)
@@ -109,7 +109,7 @@ def purchase():
 
     transaction = MARKETPLACE.functions.cancel(id, amount).build_transaction({
         'from': WALLET_ADDRESS,
-        'chainId': 11155111,
+        'chainId': 17000,
         'gas': 300000,
         'maxFeePerGas': W3.eth.gas_price + 300000,
         'value': value,

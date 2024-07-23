@@ -7,8 +7,8 @@ def main():
     thread_cancel.start()
     thread_change_price.start()
     thread_purchase.start()
-    
-    print("\nПриложение работает в тестовой сети Sepolia. Чтобы посмотреть подробную информацию о транзакциях, перейдите на https://sepolia.etherscan.io/")
+
+    print("\nПриложение работает в тестовой сети Holesky. Чтобы посмотреть подробную информацию о транзакциях, перейдите на https://holesky.etherscan.io/")
 
     event_tracking_setup()
 
