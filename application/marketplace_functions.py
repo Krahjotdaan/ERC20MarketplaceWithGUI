@@ -7,7 +7,11 @@ def lot_id():
 
 
 def lot_info():
-    id = int(input("Введите id лота: "))
+    try:
+        id = int(input("Введите id лота: "))
+    except ValueError:
+        id = int(input("Введите id лота: "))
+
     lot = MARKETPLACE.functions.list(id).call()
     print(f"Лот: {id}")
     print(f"Адрес токена: {lot[0]}")
@@ -18,8 +22,16 @@ def lot_info():
 
 def list_lot():
     token_address = input("Введите адрес токена: ")
-    price = input("Введите цену за 1 единицу в wei: ")
-    amount = input("Введите количество единиц для продажи: ")
+
+    try:
+        price = int(input("Введите цену за 1 единицу в wei: "))
+    except ValueError:
+        price = int(input("Введите цену за 1 единицу в wei: "))
+
+    try:
+        amount = int(input("Введите количество единиц для продажи: "))
+    except ValueError:
+        amount = int(input("Введите количество единиц для продажи: "))
 
     transaction = MARKETPLACE.functions.listLot(token_address, price, amount).build_transaction({
         'from': WALLET_ADDRESS,
@@ -34,8 +46,15 @@ def list_lot():
 
 
 def cancel():
-    id = int(input("Введите id лота: "))
-    amount = int(input("Введите количество единиц для снятия с продажи: "))
+    try:
+        id = int(input("Введите id лота: "))
+    except ValueError:
+        id = int(input("Введите id лота: "))
+
+    try:
+        amount = int(input("Введите количество единиц для снятия с продажи: "))
+    except ValueError:
+        amount = int(input("Введите количество единиц для снятия с продажи: "))
 
     transaction = MARKETPLACE.functions.cancel(id, amount).build_transaction({
         'from': WALLET_ADDRESS,
@@ -50,9 +69,16 @@ def cancel():
 
 
 def change_price():
-    id = int(input("Введите id лота: "))
-    new_price = int(input("Введите новую цену за 1 единицу токена в wei: ")
-)
+    try:
+        id = int(input("Введите id лота: "))
+    except ValueError:
+        id = int(input("Введите id лота: "))
+
+    try:
+        new_price = int(input("Введите новую цену за 1 единицу токена в wei: "))
+    except ValueError:
+        new_price = int(input("Введите новую цену за 1 единицу токена в wei: "))
+
     transaction = MARKETPLACE.functions.changePrice(id, new_price).build_transaction({
         'from': WALLET_ADDRESS,
         'chainId': 11155111,
@@ -66,9 +92,20 @@ def change_price():
 
 
 def purchase():
-    id = int(input("Введите id лота: "))
-    amount = int(input("Введите количество единиц для покупки: "))
-    value = int(input("Введите количество wei, которое хотите заплатить: "))
+    try:
+        id = int(input("Введите id лота: "))
+    except ValueError:
+        id = int(input("Введите id лота: "))
+
+    try:
+        amount = int(input("Введите количество единиц для покупки: "))
+    except ValueError:
+        amount = int(input("Введите количество единиц для покупки: "))
+
+    try:
+        value = int(input("Введите количество wei, которое хотите заплатить: "))
+    except ValueError:
+        value = int(input("Введите количество wei, которое хотите заплатить: "))
 
     transaction = MARKETPLACE.functions.cancel(id, amount).build_transaction({
         'from': WALLET_ADDRESS,
