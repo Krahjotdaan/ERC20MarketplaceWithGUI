@@ -107,7 +107,7 @@ def purchase():
     except ValueError:
         value = int(input("Введите количество wei, которое хотите заплатить: "))
 
-    transaction = MARKETPLACE.functions.cancel(id, amount).build_transaction({
+    transaction = MARKETPLACE.functions.purchase(id, amount).build_transaction({
         'from': WALLET_ADDRESS,
         'chainId': 17000,
         'gas': 300000,
