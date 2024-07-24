@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui/layouts/SetWallet.ui'
+# Form implementation generated from reading ui file 'application/gui/SetWallet.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_SetWallet(object):
     def setupUi(self, SetWallet):
         SetWallet.setObjectName("SetWallet")
+        SetWallet.setWindowModality(QtCore.Qt.WindowModal)
         SetWallet.resize(561, 142)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(SetWallet.sizePolicy().hasHeightForWidth())
+        SetWallet.setSizePolicy(sizePolicy)
+        SetWallet.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         SetWallet.setWindowTitle("")
         self.buttonBox = QtWidgets.QDialogButtonBox(SetWallet)
         self.buttonBox.setGeometry(QtCore.QRect(250, 100, 301, 32))
@@ -24,12 +31,12 @@ class Ui_SetWallet(object):
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
-        self.lineEdit = QtWidgets.QLineEdit(SetWallet)
-        self.lineEdit.setGeometry(QtCore.QRect(10, 50, 541, 31))
+        self.wallet_input = QtWidgets.QLineEdit(SetWallet)
+        self.wallet_input.setGeometry(QtCore.QRect(10, 50, 541, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
-        self.lineEdit.setFont(font)
-        self.lineEdit.setObjectName("lineEdit")
+        self.wallet_input.setFont(font)
+        self.wallet_input.setObjectName("wallet_input")
         self.label = QtWidgets.QLabel(SetWallet)
         self.label.setGeometry(QtCore.QRect(10, 0, 271, 41))
         font = QtGui.QFont()

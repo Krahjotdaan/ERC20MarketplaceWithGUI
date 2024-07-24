@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui/layouts/AboutProgramm.ui'
+# Form implementation generated from reading ui file 'application/gui/AboutProgramm.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,6 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AboutProgramm(object):
     def setupUi(self, AboutProgramm):
         AboutProgramm.setObjectName("AboutProgramm")
+        AboutProgramm.setWindowModality(QtCore.Qt.WindowModal)
         AboutProgramm.resize(892, 562)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -30,7 +31,8 @@ class Ui_AboutProgramm(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.line = QtWidgets.QFrame(self.centralwidget)
-        self.line.setGeometry(QtCore.QRect(0, 60, 721, 20))
+        self.line.setWindowModality(QtCore.Qt.WindowModal)
+        self.line.setGeometry(QtCore.QRect(0, 60, 891, 20))
         self.line.setFrameShape(QtWidgets.QFrame.HLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
