@@ -73,7 +73,7 @@
       <x>960</x>
       <y>80</y>
       <width>303</width>
-      <height>31</height>
+      <height>34</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -172,7 +172,7 @@
         </font>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="all_lots">
         <attribute name="title">
@@ -183,8 +183,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>911</width>
-           <height>501</height>
+           <width>901</width>
+           <height>491</height>
           </rect>
          </property>
          <property name="verticalScrollBarPolicy">
@@ -201,9 +201,12 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>881</width>
-           <height>501</height>
+           <width>901</width>
+           <height>491</height>
           </rect>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
          </property>
         </widget>
        </widget>
