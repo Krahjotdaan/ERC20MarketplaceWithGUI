@@ -1,6 +1,5 @@
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
 from gui.windows.MainWindow import *
 from gui.windows.AboutProgramm import *
 from gui.windows.SetWallet import *
