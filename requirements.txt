@@ -1,1 +1,4 @@
 web3==6.18
+pyqt5
+pyqt5-tools
+pyuic5-tool
