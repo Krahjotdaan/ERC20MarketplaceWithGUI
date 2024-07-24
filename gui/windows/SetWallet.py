@@ -11,12 +11,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(561, 142)
-        Dialog.setWindowTitle("")
-        self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
+class Ui_SetWallet(object):
+    def setupUi(self, SetWallet):
+        SetWallet.setObjectName("SetWallet")
+        SetWallet.resize(561, 142)
+        SetWallet.setWindowTitle("")
+        self.buttonBox = QtWidgets.QDialogButtonBox(SetWallet)
         self.buttonBox.setGeometry(QtCore.QRect(250, 100, 301, 32))
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -24,24 +24,24 @@ class Ui_Dialog(object):
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
-        self.lineEdit = QtWidgets.QLineEdit(Dialog)
+        self.lineEdit = QtWidgets.QLineEdit(SetWallet)
         self.lineEdit.setGeometry(QtCore.QRect(10, 50, 541, 31))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit.setFont(font)
         self.lineEdit.setObjectName("lineEdit")
-        self.label = QtWidgets.QLabel(Dialog)
+        self.label = QtWidgets.QLabel(SetWallet)
         self.label.setGeometry(QtCore.QRect(10, 0, 271, 41))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.label.setFont(font)
         self.label.setObjectName("label")
 
-        self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept) # type: ignore
-        self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(SetWallet)
+        self.buttonBox.accepted.connect(SetWallet.accept) # type: ignore
+        self.buttonBox.rejected.connect(SetWallet.reject) # type: ignore
+        QtCore.QMetaObject.connectSlotsByName(SetWallet)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, SetWallet):
         _translate = QtCore.QCoreApplication.translate
-        self.label.setText(_translate("Dialog", "Введите адрес кошелька"))
+        self.label.setText(_translate("SetWallet", "Введите адрес кошелька"))
