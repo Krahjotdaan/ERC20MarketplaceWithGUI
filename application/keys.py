@@ -3,7 +3,6 @@ from web3 import Web3, HTTPProvider
 
 PROVIDER = "https://holesky.infura.io/v3/69f2d3f6cfc84b92a29e3f3bd1b4ec8b"
 WALLET_ADDRESS = ""
-PRIVATE_KEY = ""
 marketplace = "0x83057dbC72018Be1740A4f42f0d704DE7FDE59cb"
 
 true = True

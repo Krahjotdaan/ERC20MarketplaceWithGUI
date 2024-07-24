@@ -1,6 +1,6 @@
 import time
 from threading import Thread
-from keys import PRINT_EVENT, MARKETPLACE
+from application.keys import PRINT_EVENT, MARKETPLACE
 
 
 def log_loop_list_lot(event_filter, poll_interval):
