@@ -604,7 +604,8 @@ class Ui_MainWindow(object):
 
         self.about_programm_button.clicked.connect(MainWindow.about_programm_button_click)
         self.connect_wallet_button.clicked.connect(MainWindow.connect_wallet_button_click)
-        
+        self.apply_sell_button.clicked.connect(MainWindow.apply_sell_button_click)
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
