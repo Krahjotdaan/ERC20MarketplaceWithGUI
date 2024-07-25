@@ -3,8 +3,9 @@ from PyQt5 import QtWidgets, QtCore
 from application.gui.MainWindow import *
 from application.gui.AboutProgramm import *
 from application.gui.SetWallet import *
-from application.keys import WALLET_ADDRESS, PRINT_EVENT
+from application.keys import WALLET_ADDRESS, PRINT_EVENT, APPLICATION
 from application.event_trackers import thread_list_lot, thread_cancel, thread_change_price, thread_purchase
+from application.marketplace_functions import *
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -24,6 +25,33 @@ class MainWindow(QtWidgets.QMainWindow):
         self.set_wallet_window.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
         self.set_wallet_window.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
         self.set_wallet_window.show()
+
+    def count_cost_button_click(self):
+        pass
+
+    def apply_purchase_button_click(self):
+        pass
+
+    def apply_sell_button_click(self):
+        pass
+
+    def count_new_price_button_click(self):
+        pass
+
+    def apply_change_price_button_click(self):
+        pass
+
+    def count_cancel_button_click(self):
+        pass
+
+    def apply_cancel_button_click(self):
+        pass
+
+    def search_button_click(self):
+        pass
+
+    def clear_filter_button_click(self):
+        pass
 
 
 class AboutProgrammWindow(QtWidgets.QMainWindow):
@@ -57,19 +85,21 @@ class SetWalletWindow(QtWidgets.QDialog):
     def decline(self):
         self.close()
 
-def main(): 
+def main():
     app = QtWidgets.QApplication([])
-    application = MainWindow()
-    application.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
-    application.show()
+    global APPLICATION
+    APPLICATION = MainWindow()
+    APPLICATION.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+    APPLICATION.show()
+
+    """thread_list_lot.start()
+    thread_cancel.start()
+    thread_change_price.start()
+    thread_purchase.start()"""
 
     sys.exit(app.exec())
 
 
 if __name__ == '__main__':
     main()
-    thread_list_lot.start()
-    thread_cancel.start()
-    thread_change_price.start()
-    thread_purchase.start()
     

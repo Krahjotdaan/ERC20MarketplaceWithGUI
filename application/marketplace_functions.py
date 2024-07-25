@@ -1,4 +1,4 @@
-from keys import W3, WALLET_ADDRESS, MARKETPLACE
+from application.keys import W3, WALLET_ADDRESS, MARKETPLACE
 
 
 def lot_id():

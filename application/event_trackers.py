@@ -1,6 +1,6 @@
 import time
 from threading import Thread
-from application.keys import PRINT_EVENT, MARKETPLACE
+from application.keys import PRINT_EVENT, MARKETPLACE, APPLICATION
 
 
 def log_loop_list_lot(event_filter, poll_interval):
@@ -8,12 +8,14 @@ def log_loop_list_lot(event_filter, poll_interval):
         while not PRINT_EVENT:
             time.sleep(poll_interval)
         for event in event_filter.get_new_entries():
-            print("\nНовый лот")
-            print(f"id лота: {event['args']['lotId']}")
-            print(f"Продавец: {event['args']['owner']}")
-            print(f"Адрес токена: {event['args']['tokenAddress']}")
-            print(f"Цена за 1 единицу: {event['args']['price']}")
-            print(f"Количество единиц: {event['args']['amount']}")
+            APPLICATION.ui.events_display.append(
+                f"Новый лот\n \
+                id лота: {event['args']['lotId']}\n \
+                Продавец: {event['args']['owner']}\n \
+                Адрес токена: {event['args']['tokenAddress']}\n \
+                Цена за 1 единицу: {event['args']['price']}\n \
+                Количество единиц: {event['args']['amount']}\n"
+            )
         time.sleep(poll_interval)
 
 
@@ -22,9 +24,11 @@ def log_loop_cancel(event_filter, poll_interval):
         while not PRINT_EVENT:
             time.sleep(poll_interval)
         for event in event_filter.get_new_entries():
-            print("\nОтмена продажи")
-            print(f"id лота: {event['args']['lotId']}")
-            print(f"Количество единиц снятых с продажи: {event['args']['amount']}")
+            APPLICATION.ui.events_display.append(
+                f"Отмена продажи\n \
+                id лота: {event['args']['lotId']}\n \
+                Количество единиц снятых с продажи: {event['args']['amount']}\n"
+            )
         time.sleep(poll_interval)
 
 
@@ -33,10 +37,12 @@ def log_loop_change_price(event_filter, poll_interval):
         while not PRINT_EVENT:
             time.sleep(poll_interval)
         for event in event_filter.get_new_entries():
-            print("\nИзменена цена")
-            print(f"id лота: {event['args']['lotId']}")
-            print(f"Старая цена: {event['args']['oldPrice']}")
-            print(f"Новая цена: {event['args']['newPrice']}")
+            APPLICATION.ui.events_display.append(
+                f"Изменена цена\n \
+                id лота: {event['args']['lotId']}\n \
+                Старая цена: {event['args']['oldPrice']}\n \
+                Новая цена: {event['args']['newPrice']}\n"
+            )
         time.sleep(poll_interval)
 
 
@@ -45,12 +51,14 @@ def log_loop_purchase(event_filter, poll_interval):
         while not PRINT_EVENT:
             time.sleep(poll_interval)
         for event in event_filter.get_new_entries():
-            print("\nНовый лот")
-            print(f"id лота: {event['args']['lotId']}")
-            print(f"Адрес токена: {event['args']['tokenAddress']}")
-            print(f"Цена за 1 единицу: {event['args']['price']}")
-            print(f"Куплено единиц: {event['args']['amount']}")
-            print(f"Покупатель: {event['args']['customer']}")
+            APPLICATION.ui.events_display.append(
+                f"Покупка\n \
+                id лота: {event['args']['lotId']}\n \
+                Адрес токена: {event['args']['tokenAddress']}\n \
+                Цена за 1 единицу: {event['args']['price']}\n \
+                Куплено единиц: {event['args']['amount']}\n \
+                Покупатель: {event['args']['customer']}\n"
+            )
         time.sleep(poll_interval)
 
 
