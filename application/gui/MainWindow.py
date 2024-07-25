@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui/layouts/MainWindow.ui'
+# Form implementation generated from reading ui file 'MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -70,6 +70,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.is_event_track.setFont(font)
+        self.is_event_track.setChecked(True)
         self.is_event_track.setObjectName("is_event_track")
         self.horizontalLayout_3.addWidget(self.is_event_track)
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -79,14 +80,14 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         self.events_display = QtWidgets.QTextBrowser(self.gridLayoutWidget)
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        self.events_display.setFont(font)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.events_display.sizePolicy().hasHeightForWidth())
         self.events_display.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.events_display.setFont(font)
         self.events_display.setObjectName("events_display")
         self.gridLayout.addWidget(self.events_display, 0, 0, 1, 1)
         self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.centralwidget)
@@ -195,7 +196,7 @@ class Ui_MainWindow(object):
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.private_key_input_purchase = QtWidgets.QLineEdit(self.purchase_widget)
-        self.private_key_input_purchase.setEnabled(False)
+        self.private_key_input_purchase.setEnabled(True)
         self.private_key_input_purchase.setGeometry(QtCore.QRect(180, 350, 541, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -260,14 +261,14 @@ class Ui_MainWindow(object):
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.private_key_input_sell = QtWidgets.QLineEdit(self.sell_widget)
-        self.private_key_input_sell.setEnabled(False)
+        self.private_key_input_sell.setEnabled(True)
         self.private_key_input_sell.setGeometry(QtCore.QRect(180, 110, 541, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
         self.private_key_input_sell.setFont(font)
         self.private_key_input_sell.setObjectName("private_key_input_sell")
         self.apply_sell_button = QtWidgets.QPushButton(self.sell_widget)
-        self.apply_sell_button.setEnabled(False)
+        self.apply_sell_button.setEnabled(True)
         self.apply_sell_button.setGeometry(QtCore.QRect(730, 110, 141, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -400,7 +401,7 @@ class Ui_MainWindow(object):
         self.label_26.setFont(font)
         self.label_26.setObjectName("label_26")
         self.private_key_input_change_price = QtWidgets.QLineEdit(self.purchase_widget_2)
-        self.private_key_input_change_price.setEnabled(False)
+        self.private_key_input_change_price.setEnabled(True)
         self.private_key_input_change_price.setGeometry(QtCore.QRect(180, 350, 541, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -504,7 +505,7 @@ class Ui_MainWindow(object):
         self.label_29.setFont(font)
         self.label_29.setObjectName("label_29")
         self.private_key_input_cancel = QtWidgets.QLineEdit(self.purchase_widget_7)
-        self.private_key_input_cancel.setEnabled(False)
+        self.private_key_input_cancel.setEnabled(True)
         self.private_key_input_cancel.setGeometry(QtCore.QRect(180, 350, 541, 41))
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -565,7 +566,7 @@ class Ui_MainWindow(object):
         self.about_programm_button.setObjectName("about_programm_button")
         self.horizontalLayout_8.addWidget(self.about_programm_button)
         self.horizontalLayoutWidget_7 = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_7.setGeometry(QtCore.QRect(20, 10, 1126, 41))
+        self.horizontalLayoutWidget_7.setGeometry(QtCore.QRect(20, 10, 1238, 41))
         self.horizontalLayoutWidget_7.setObjectName("horizontalLayoutWidget_7")
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_7)
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
@@ -603,11 +604,11 @@ class Ui_MainWindow(object):
 
         self.about_programm_button.clicked.connect(MainWindow.about_programm_button_click)
         self.connect_wallet_button.clicked.connect(MainWindow.connect_wallet_button_click)
-
+        
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.lots.setCurrentIndex(2)
+        self.lots.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -693,6 +694,6 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Вставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку &quot;Подтвердить&quot; для отправки транзакции.</p></body></html>"))
         self.lots.setTabText(self.lots.indexOf(self.cancel_tab), _translate("MainWindow", "Снять с продажи"))
         self.about_programm_button.setText(_translate("MainWindow", "О программе"))
-        self.marketplace_label.setText(_translate("MainWindow", "<html><head/><body><p>Контракт маркетплейса токенов ERC20: 0x5F048189D7Ea76f6a7718bb771872B738508a471</p></body></html>"))
+        self.marketplace_label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Контракт маркетплейса токенов ERC20: </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:16pt; color:#000000;\">0x5F048189D7Ea76f6a7718bb771872B738508a471</span></p></body></html>"))
         self.connect_wallet_button.setText(_translate("MainWindow", "Установить кошелек"))
         self.wallet_label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">Кошелек: </span></p></body></html>"))

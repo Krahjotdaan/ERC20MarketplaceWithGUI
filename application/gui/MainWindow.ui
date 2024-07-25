@@ -141,6 +141,9 @@
        <property name="text">
         <string>Отслеживать события</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -162,6 +165,11 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
        </property>
       </widget>
      </item>
@@ -233,7 +241,7 @@
         </font>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="all_lots">
         <attribute name="title">
@@ -410,7 +418,7 @@
             </widget>
             <widget class="QLineEdit" name="private_key_input_purchase">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="geometry">
               <rect>
@@ -596,7 +604,7 @@ p, li { white-space: pre-wrap; }
             </widget>
             <widget class="QLineEdit" name="private_key_input_sell">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="geometry">
               <rect>
@@ -614,7 +622,7 @@ p, li { white-space: pre-wrap; }
             </widget>
             <widget class="QPushButton" name="apply_sell_button">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="geometry">
               <rect>
@@ -971,7 +979,7 @@ p, li { white-space: pre-wrap; }
             </widget>
             <widget class="QLineEdit" name="private_key_input_change_price">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="geometry">
               <rect>
@@ -1257,7 +1265,7 @@ p, li { white-space: pre-wrap; }
             </widget>
             <widget class="QLineEdit" name="private_key_input_cancel">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="geometry">
               <rect>
@@ -1437,7 +1445,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>1126</width>
+      <width>1238</width>
       <height>41</height>
      </rect>
     </property>
@@ -1450,7 +1458,7 @@ p, li { white-space: pre-wrap; }
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Контракт маркетплейса токенов ERC20: 0x83057dbC72018Be1740A4f42f0d704DE7FDE59cb&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Контракт маркетплейса токенов ERC20: &lt;/span&gt;&lt;span style=&quot; font-family:'Consolas,Courier New,monospace'; font-size:16pt; color:#000000;&quot;&gt;0x5F048189D7Ea76f6a7718bb771872B738508a471&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
