@@ -300,14 +300,13 @@ def main():
         APPLICATION.ui.list_all_lots.addItem(item)
     APPLICATION.show()
 
-    """thread_list_lot.start()
-    thread_cancel.start()
-    thread_change_price.start()
-    thread_purchase.start()"""
-
     sys.exit(app.exec())
 
 
 if __name__ == '__main__':
     main()
+    thread_list_lot.start()
+    thread_cancel.start()
+    thread_change_price.start()
+    thread_purchase.start()
     

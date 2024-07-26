@@ -2,7 +2,7 @@ from web3 import Web3, HTTPProvider
 
 
 PROVIDER = "https://holesky.infura.io/v3/69f2d3f6cfc84b92a29e3f3bd1b4ec8b"
-marketplace = "0x5F048189D7Ea76f6a7718bb771872B738508a471"
+marketplace = "0x398469Db4212E43eBDcf985ABEf04df1C0977017"
 Wallet = ""
 
 def set_wallet(wallet):
