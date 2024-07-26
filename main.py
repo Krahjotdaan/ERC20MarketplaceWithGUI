@@ -1,4 +1,4 @@
-import sys
+import sys, web3
 from PyQt5 import QtWidgets, QtCore
 from application.gui.MainWindow import *
 from application.gui.AboutProgramm import *
@@ -9,14 +9,16 @@ from application.event_trackers import thread_list_lot, thread_cancel, thread_ch
 from application.marketplace_functions import *
 
 
-lots = {}
-lot_widgets = []
-
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.lots = {}
+        self.lot_widgets = []
+        self.purchase_id = 0
+        self.purchase_amount = 0
+        self.purchase_cost = 0
     
     def about_programm_button_click(self):
         self.about_programm_window = AboutProgrammWindow()
@@ -31,7 +33,32 @@ class MainWindow(QtWidgets.QMainWindow):
         self.set_wallet_window.show()
 
     def count_cost_button_click(self):
-        pass
+        try:
+            if int(self.ui.id_purchase_input.text()) > 0:
+                self.purchase_id = int(self.ui.id_purchase_input.text())
+
+            else:
+                eras = QtWidgets.QErrorMessage(parent=self)
+                eras.showMessage("id должен быть больше 0")
+        except ValueError:
+            eras = QtWidgets.QErrorMessage(parent=self)
+            eras.showMessage("Некорректный id")
+
+        try:
+            if int(self.ui.amount_purchase_input.text()) > 0:
+                self.purchase_amount = int(self.ui.amount_purchase_input.text())
+            else:
+                eras = QtWidgets.QErrorMessage(parent=self)
+                eras.showMessage("Количество должно быть больше 0")
+        except ValueError:
+            eras = QtWidgets.QErrorMessage(parent=self)
+            eras.showMessage("Некорректное количество")
+
+        lot = self.lots[str(self.purchase_id)]
+        self.purchase_cost = self.purchase_amount * lot[2]
+        self.ui.purchase_browser.setText(f"""id: {self.purchase_id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {self.purchase_amount}\nИтого: {self.purchase_cost} wei\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
+        self.ui.apply_purchase_button.setEnabled(True)
+            
 
     def apply_purchase_button_click(self):
         pass
@@ -74,7 +101,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         private_key = self.ui.private_key_input_sell.text()
         
-        import web3
         try:
             tx_hash = list_lot(token_address, price, amount, private_key)
             self.tx_browser = TxBrowser(tx_hash)
@@ -152,31 +178,25 @@ class TxBrowser(QtWidgets.QMainWindow):
 
 
 def main():
+    app = QtWidgets.QApplication([])
+    global APPLICATION
+    APPLICATION = MainWindow()
+    APPLICATION.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+
     ids = lot_id()
     global lots
     for i in range(1, ids + 1):
         lot = lot_info(i)
         if lot[3] > 0:
-            lots[i] = lot
+            APPLICATION.lots[str(i)] = lot
             lot_widget = QtWidgets.QListWidgetItem()
             font = QtGui.QFont()
             font.setPointSize(12)
             lot_widget.setFont(font)
-            lot_widget.setText(f"id: {i}\n \
-                                Продавец: {lot[0]}\n \
-                                Адрес токена: {lot[1]}\n \
-                                Название: {lot[4]} \n \
-                                Символ: {lot[5]} \n \
-                                Десятичных токенов: {lot[6]} \n \
-                                Цена за 1 единицу: {lot[2]} wei\n \
-                                Количество единиц: {lot[3]}\n")
-            lot_widgets.append(lot_widget)
+            lot_widget.setText(f"id: {i}\nПродавец: {lot[1]}\nАдрес токена: {lot[0]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+            APPLICATION.lot_widgets.append(lot_widget)
 
-    app = QtWidgets.QApplication([])
-    global APPLICATION
-    APPLICATION = MainWindow()
-    APPLICATION.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
-    for item in lot_widgets:
+    for item in APPLICATION.lot_widgets:
         APPLICATION.ui.list_all_lots.addItem(item)
     APPLICATION.show()
 
