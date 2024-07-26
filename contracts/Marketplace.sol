@@ -74,8 +74,8 @@ contract Marketplace {
         require(IERC20(_tokenAddress).transferFrom(msg.sender, address(this), _amount));
 
         ++lotId;
-        list[lotId] = Lot(_tokenAddress, 
-            msg.sender, 
+        list[lotId] = Lot(msg.sender, 
+            _tokenAddress,
             _price,
             _amount, 
             IERC20(_tokenAddress).name(), 
@@ -162,8 +162,8 @@ contract Marketplace {
 
         Lot storage lot = list[_id];
 
-        require(msg.value >= lot.price * _amount, "Marketplace: not enough eth");
         require(lot.amount >= _amount, "Marketplace: too many tokens to purchase");
+        require(msg.value >= lot.price * _amount, "Marketplace: not enough eth"); 
         require(IERC20(lot.tokenAddress).transfer(msg.sender, _amount));
 
         payable(lot.tokenOwner).transfer(lot.price * _amount);
