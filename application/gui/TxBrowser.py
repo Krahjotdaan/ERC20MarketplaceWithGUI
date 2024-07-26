@@ -15,6 +15,7 @@ class Ui_TxBrowser(object):
     def setupUi(self, TxBrowser):
         TxBrowser.setObjectName("TxBrowser")
         TxBrowser.resize(954, 168)
+        TxBrowser.setWindowModality(QtCore.Qt.WindowModal)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -50,7 +51,7 @@ class Ui_TxBrowser(object):
         self.tx_info.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tx_info.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tx_info.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
-        self.tx_info.setReadOnly(True)
+        #self.tx_info.setReadOnly(True)
         self.tx_info.setObjectName("tx_info")
         TxBrowser.setCentralWidget(self.centralwidget)
 
