@@ -7,59 +7,56 @@ def log_loop_list_lot(event_filter, poll_interval):
     while True:
         while not PRINT_EVENT:
             time.sleep(poll_interval)
-        for event in event_filter.get_new_entries():
-            APPLICATION.ui.events_display.append(
-                f"Новый лот\n \
-                id лота: {event['args']['lotId']}\n \
-                Продавец: {event['args']['owner']}\n \
-                Адрес токена: {event['args']['tokenAddress']}\n \
-                Цена за 1 единицу: {event['args']['price']}\n \
-                Количество единиц: {event['args']['amount']}\n"
-            )
-        time.sleep(poll_interval)
+        try:
+            for event in event_filter.get_new_entries():
+                APPLICATION.ui.events_display.append(
+                    f"Новый лот\nid лота: {event['args']['lotId']}\nПродавец: {event['args']['owner']}\nАдрес токена: {event['args']['tokenAddress']}\nЦена за 1 единицу: {event['args']['price']}\nКоличество единиц: {event['args']['amount']}\n"
+                )
+            time.sleep(poll_interval)
+        except:
+            event_filter = MARKETPLACE.events.ListLot.create_filter(fromBlock="latest")
 
 
 def log_loop_cancel(event_filter, poll_interval):
     while True:
         while not PRINT_EVENT:
             time.sleep(poll_interval)
-        for event in event_filter.get_new_entries():
-            APPLICATION.ui.events_display.append(
-                f"Отмена продажи\n \
-                id лота: {event['args']['lotId']}\n \
-                Количество единиц снятых с продажи: {event['args']['amount']}\n"
-            )
-        time.sleep(poll_interval)
+        try:
+            for event in event_filter.get_new_entries():
+                APPLICATION.ui.events_display.append(
+                    f"Отмена продажи\nid лота: {event['args']['lotId']}\nКоличество единиц снятых с продажи: {event['args']['amount']}\n"
+                )
+            time.sleep(poll_interval)
+        except:
+            event_filter = MARKETPLACE.events.Cancel.create_filter(fromBlock="latest")
 
 
 def log_loop_change_price(event_filter, poll_interval):
     while True:
         while not PRINT_EVENT:
             time.sleep(poll_interval)
-        for event in event_filter.get_new_entries():
-            APPLICATION.ui.events_display.append(
-                f"Изменена цена\n \
-                id лота: {event['args']['lotId']}\n \
-                Старая цена: {event['args']['oldPrice']}\n \
-                Новая цена: {event['args']['newPrice']}\n"
-            )
-        time.sleep(poll_interval)
+        try:
+            for event in event_filter.get_new_entries():
+                APPLICATION.ui.events_display.append(
+                    f"Изменена цена\nid лота: {event['args']['lotId']}\nСтарая цена: {event['args']['oldPrice']}\nНовая цена: {event['args']['newPrice']}\n"
+                )
+            time.sleep(poll_interval)
+        except:
+            event_filter = MARKETPLACE.events.ChangePrice.create_filter(fromBlock="latest")
 
 
 def log_loop_purchase(event_filter, poll_interval):
     while True:
         while not PRINT_EVENT:
             time.sleep(poll_interval)
-        for event in event_filter.get_new_entries():
-            APPLICATION.ui.events_display.append(
-                f"Покупка\n \
-                id лота: {event['args']['lotId']}\n \
-                Адрес токена: {event['args']['tokenAddress']}\n \
-                Цена за 1 единицу: {event['args']['price']}\n \
-                Куплено единиц: {event['args']['amount']}\n \
-                Покупатель: {event['args']['customer']}\n"
-            )
-        time.sleep(poll_interval)
+        try:
+            for event in event_filter.get_new_entries():
+                APPLICATION.ui.events_display.append(
+                    f"Покупка\nid лота: {event['args']['lotId']}\nАдрес токена: {event['args']['tokenAddress']}\nЦена за 1 единицу: {event['args']['price']}\nКуплено единиц: {event['args']['amount']}\nПокупатель: {event['args']['customer']}\n"
+                )
+            time.sleep(poll_interval)
+        except:
+            event_filter = MARKETPLACE.events.Purchase.create_filter(fromBlock="latest")
 
 
 event_filter_list_lot = MARKETPLACE.events.ListLot.create_filter(fromBlock="latest")

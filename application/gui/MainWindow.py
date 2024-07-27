@@ -609,6 +609,7 @@ class Ui_MainWindow(object):
         self.apply_purchase_button.clicked.connect(MainWindow.apply_purchase_button_click)
         self.count_new_price.clicked.connect(MainWindow.count_new_price_button_click)
         self.apply_change_price_button.clicked.connect(MainWindow.apply_change_price_button_click)
+        self.count_cancel.clicked.connect(MainWindow.count_cancel_button_click)
 
         MainWindow.setCentralWidget(self.centralwidget)
 

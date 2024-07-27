@@ -1,5 +1,4 @@
 from application.keys import W3, MARKETPLACE, get_wallet
-import web3
 
 
 def lot_id():
@@ -66,4 +65,5 @@ def purchase(id, amount, value, PRIVATE_KEY):
     print(transaction)
     signed_transaction = W3.eth.account.sign_transaction(transaction, PRIVATE_KEY)
     tx_hash = W3.eth.send_raw_transaction(signed_transaction.rawTransaction)
+
     return W3.to_hex(tx_hash)

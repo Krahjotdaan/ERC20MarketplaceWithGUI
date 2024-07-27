@@ -4,6 +4,7 @@ from application.gui.MainWindow import *
 from application.gui.AboutProgramm import *
 from application.gui.SetWallet import *
 from application.gui.TxBrowser import *
+from application.gui.error_messages import *
 from application.keys import APPLICATION, set_wallet
 from application.event_trackers import thread_list_lot, thread_cancel, thread_change_price, thread_purchase
 from application.marketplace_functions import *
@@ -21,6 +22,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.purchase_cost = 0
         self.change_price_id = 0
         self.new_price = 0
+        self.cancel_id = 0
+        self.cancel_amount = 0
+        self.remain_amount = 0
+        self.thread_list_lot = thread_list_lot
+        self.thread_purchase = thread_purchase
+        self.thread_change_price = thread_change_price
+        self.thread_cancel = thread_cancel
     
     def about_programm_button_click(self):
         self.about_programm_window = AboutProgrammWindow()
@@ -39,29 +47,25 @@ class MainWindow(QtWidgets.QMainWindow):
             if int(self.ui.id_purchase_input.text()) > 0:
                 self.purchase_id = int(self.ui.id_purchase_input.text())
             else:
-                self.incorrect_id()
+                incorrect_id(self)
         except ValueError:
-            self.incorrect_id()
-
-        try:
-            if int(self.ui.amount_purchase_input.text()) > 0 \
-            and int(self.ui.amount_purchase_input.text()) <= self.lots[str(self.purchase_id)][3]:
-                self.purchase_amount = int(self.ui.amount_purchase_input.text())
-            else:
-                self.incorrect_amount()
-        except ValueError:
-            self.incorrect_amount()
+            incorrect_id(self)
 
         lot = None
         try:
             lot = self.lots[str(self.purchase_id)]
-            self.purchase_cost = self.purchase_amount * lot[2]
-            self.ui.purchase_browser.setText(f"""id: {self.purchase_id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {self.purchase_amount}\nИтого: {self.purchase_cost} wei\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
-            self.ui.apply_purchase_button.setEnabled(True)
+            if int(self.ui.amount_purchase_input.text()) > 0 and int(self.ui.amount_purchase_input.text()) <= lot[3]:
+                self.purchase_amount = int(self.ui.amount_purchase_input.text())
+                self.purchase_cost = self.purchase_amount * lot[2]
+                self.ui.purchase_browser.setText(f"""id: {self.purchase_id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {self.purchase_amount}\nИтого: {self.purchase_cost} wei\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
+                self.ui.apply_purchase_button.setEnabled(True)
+            else:
+                incorrect_amount(self)
+        except ValueError:
+            incorrect_amount(self)       
         except KeyError:
             eras = QtWidgets.QErrorMessage(parent=self)
-            eras.showMessage("Такого id нет")
-            
+            eras.showMessage("Такого id нет")        
 
     def apply_purchase_button_click(self):
         private_key = self.ui.private_key_input_purchase.text()
@@ -77,11 +81,11 @@ class MainWindow(QtWidgets.QMainWindow):
         except web3.exceptions.Web3ValidationError:
             pass    
         except web3.exceptions.InvalidAddress:
-            self.incorrect_wallet()
+            incorrect_wallet(self)
         except ValueError:
-            self.incorrect_private_key()
+            incorrect_private_key(self)
         except TypeError:
-            self.incorrect_private_key()
+            incorrect_private_key(self)
            
         del(private_key)
         self.purchase_id = 0
@@ -103,25 +107,25 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.ui.address_sell_input.text()[:2] == "0x":
                 token_address = self.ui.address_sell_input.text()
             else:
-                self.incorrect_address()
+                incorrect_address(self)
         except:
-            self.incorrect_address()
+            incorrect_address(self)
 
         try:
             if int(self.ui.price_sell_input.text()) > 0:
                 price = int(self.ui.price_sell_input.text())
             else:
-                self.incorrect_price()
+                incorrect_price(self)
         except ValueError:
-            self.incorrect_price()
+            incorrect_price(self)
 
         try:
             if int(self.ui.amount_sell_input.text()) > 0:
                 amount = int(self.ui.amount_sell_input.text())
             else:
-                self.incorrect_amount()
+                incorrect_amount(self)
         except ValueError:
-            self.incorrect_amount()
+            incorrect_amount(self)
 
         private_key = self.ui.private_key_input_sell.text()
         
@@ -136,11 +140,11 @@ class MainWindow(QtWidgets.QMainWindow):
         except web3.exceptions.Web3ValidationError:
             pass
         except web3.exceptions.InvalidAddress:
-            self.incorrect_wallet()
+            incorrect_wallet(self)
         except ValueError:
-            self.incorrect_private_key()
+            incorrect_private_key(self)
         except TypeError:
-            self.incorrect_private_key()
+            incorrect_private_key(self)
            
         del(private_key)
         self.ui.private_key_input_sell.setText("")
@@ -150,9 +154,9 @@ class MainWindow(QtWidgets.QMainWindow):
             if int(self.ui.id_change_price_input.text()) > 0:
                 self.change_price_id = int(self.ui.id_change_price_input.text())
             else:
-                self.incorrect_id()
+                incorrect_id(self)
         except ValueError:
-            self.incorrect_id()
+            incorrect_id(self)
 
         lot = None
         try:
@@ -162,10 +166,10 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.ui.change_price_browser.setText(f"""id: {self.change_price_id}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nСтарая цена: {lot[2]} wei\nНовая цена: {self.new_price} wei\n\n\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
                 self.ui.apply_change_price_button.setEnabled(True)
             else:
-                self.incorrect_price()
+                incorrect_price(self)
 
         except ValueError:
-            self.incorrect_price()
+            incorrect_price()
         except KeyError:
             eras = QtWidgets.QErrorMessage(parent=self)
             eras.showMessage("Такого id нет")
@@ -184,11 +188,11 @@ class MainWindow(QtWidgets.QMainWindow):
         except web3.exceptions.Web3ValidationError:
             pass
         except web3.exceptions.InvalidAddress:
-            self.incorrect_wallet()
+            incorrect_wallet(self)
         except ValueError:
-            self.incorrect_private_key()
+            incorrect_private_key(self)
         except TypeError:
-            self.incorrect_private_key()
+            incorrect_private_key(self)
            
         del(private_key)
         self.change_price_id = 0
@@ -196,10 +200,32 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.id_change_price_input.setText("")
         self.ui.price_change_price_input.setText("")
         self.ui.private_key_input_change_price.setText("")
+        self.ui.apply_change_price_button.setEnabled(False)
         self.ui.change_price_browser.setText(f"""id:\nАдрес токена:\nНазвание:\nСимвол:\nДесятичных токенов:\nСтарая цена:\nНовая цена:\n\n\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
 
     def count_cancel_button_click(self):
-        pass
+        try:
+            if int(self.ui.id_cancel_input.text()) > 0:
+                self.cancel_id = int(self.ui.id_cancel_input.text())
+            else:
+                incorrect_id(self)
+        except ValueError:
+            incorrect_id(self)
+
+        lot = None
+        try:
+            lot = self.lots[str(self.cancel_id)]
+            if int(self.ui.amount_cancel_input.text()) > 0 and int(self.ui.amount_cancel_input.text()) <= lot[3]:
+                self.cancel_amount = int(self.ui.amount_cancel_input.text())
+                self.ui.cancel_browser.setText(f"""id: {self.cancel_id}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nБудет снято с продажи(ед. токенов): {self.cancel_amount}\nОстанется в продаже: {lot[3] - self.cancel_amount} wei\n\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
+                self.ui.apply_cancel_button.setEnabled(True)
+            else:
+                incorrect_amount(self)
+        except ValueError:
+            incorrect_amount(self)
+        except KeyError:
+            eras = QtWidgets.QErrorMessage(parent=self)
+            eras.showMessage("Такого id нет")      
 
     def apply_cancel_button_click(self):
         pass
@@ -209,30 +235,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def clear_filter_button_click(self):
         pass
-
-    def incorrect_id(self):
-        eras = QtWidgets.QErrorMessage(parent=self)
-        eras.showMessage("Некорректный id")
-    
-    def incorrect_wallet(self):
-        eras = QtWidgets.QErrorMessage(parent=self)
-        eras.showMessage("Некорректный адрес кошелька")
-
-    def incorrect_private_key(self):
-        eras = QtWidgets.QErrorMessage(parent=self)
-        eras.showMessage("Некорректный приватный ключ")
-
-    def incorrect_amount(self):
-        eras = QtWidgets.QErrorMessage(parent=self)
-        eras.showMessage("Некорректное количество")
-
-    def incorrect_price(self):
-        eras = QtWidgets.QErrorMessage(parent=self)
-        eras.showMessage("Некорректная цена")
-
-    def incorrect_address(self):
-        eras = QtWidgets.QErrorMessage(parent=self)
-        eras.showMessage("Некорректный адрес")
 
 
 class AboutProgrammWindow(QtWidgets.QMainWindow):
@@ -256,9 +258,9 @@ class SetWalletWindow(QtWidgets.QDialog):
                 self.main.ui.wallet_label.setText(f"Кошелек: {self.ui.wallet_input.text()}")
                 self.close()
             else:
-                self.main.incorrect_wallet()
+                incorrect_wallet(self)
         except:
-            self.main.incorrect_wallet()
+            incorrect_wallet(self)
 
     def decline(self):
         self.close()
@@ -270,7 +272,7 @@ class TxBrowser(QtWidgets.QMainWindow):
         self.ui = Ui_TxBrowser()
         self.ui.setupUi(self)
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(12)
         self.ui.tx_info.setFont(font)
         self.ui.tx_info.setText(f"Хэш транзакции: {tx_hash}\nПолная информация: https://holesky.etherscan.io/tx/{tx_hash}")
 
@@ -295,11 +297,10 @@ def main():
     for item in APPLICATION.lot_widgets:
         APPLICATION.ui.list_all_lots.addItem(item)
 
-    APPLICATION.ui.id_change_price_input.setText('1')
-    APPLICATION.ui.price_change_price_input.setText('300')
-    APPLICATION.ui.private_key_input_change_price.setText('')
-    set_wallet('0x318b96BC87893C5aF0E639af86da13b83B519253')
-    APPLICATION.ui.wallet_label.setText('0x318b96BC87893C5aF0E639af86da13b83B519253')
+    """APPLICATION.thread_list_lot.start()
+    APPLICATION.thread_purchase.start()
+    APPLICATION.thread_change_price.start()
+    APPLICATION.thread_cancel.start()"""
 
     APPLICATION.show()
 
@@ -308,7 +309,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    thread_list_lot.start()
-    thread_cancel.start()
-    thread_change_price.start()
-    thread_purchase.start()
