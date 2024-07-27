@@ -62,7 +62,6 @@ def purchase(id, amount, value, PRIVATE_KEY):
         'value': value,
         'nonce': W3.eth.get_transaction_count(get_wallet())
     })
-    print(transaction)
     signed_transaction = W3.eth.account.sign_transaction(transaction, PRIVATE_KEY)
     tx_hash = W3.eth.send_raw_transaction(signed_transaction.rawTransaction)
 
