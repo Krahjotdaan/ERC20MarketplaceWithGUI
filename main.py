@@ -5,7 +5,7 @@ from application.gui.AboutProgramm import *
 from application.gui.SetWallet import *
 from application.gui.TxBrowser import *
 from application.gui.error_messages import *
-from application.keys import APPLICATION, set_wallet
+from application.keys import PRINT_EVENT, set_application, set_wallet
 from application.event_trackers import thread_list_lot, thread_cancel, thread_change_price, thread_purchase
 from application.marketplace_functions import *
 
@@ -25,10 +25,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cancel_id = 0
         self.cancel_amount = 0
         self.remain_amount = 0
-        self.thread_list_lot = thread_list_lot
-        self.thread_purchase = thread_purchase
-        self.thread_change_price = thread_change_price
-        self.thread_cancel = thread_cancel
     
     def about_programm_button_click(self):
         self.about_programm_window = AboutProgrammWindow()
@@ -279,30 +275,30 @@ class TxBrowser(QtWidgets.QMainWindow):
 
 def main():
     app = QtWidgets.QApplication([])
-    global APPLICATION
-    APPLICATION = MainWindow()
-    APPLICATION.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+    application = set_application(MainWindow())
+    application.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+
     ids = lot_id()
     for i in range(1, ids + 1):
         lot = lot_info(i)
         if lot[3] > 0:
-            APPLICATION.lots[str(i)] = lot
+            application.lots[str(i)] = lot
             lot_widget = QtWidgets.QListWidgetItem()
             font = QtGui.QFont()
             font.setPointSize(12)
             lot_widget.setFont(font)
             lot_widget.setText(f"id: {i}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
-            APPLICATION.lot_widgets.append(lot_widget)
+            application.lot_widgets.append(lot_widget)
 
-    for item in APPLICATION.lot_widgets:
-        APPLICATION.ui.list_all_lots.addItem(item)
+    for item in application.lot_widgets:
+        application.ui.list_all_lots.addItem(item)
 
-    """APPLICATION.thread_list_lot.start()
-    APPLICATION.thread_purchase.start()
-    APPLICATION.thread_change_price.start()
-    APPLICATION.thread_cancel.start()"""
+    thread_list_lot.start()
+    thread_cancel.start()
+    thread_change_price.start()
+    thread_purchase.start()
 
-    APPLICATION.show()
+    application.show()
 
     sys.exit(app.exec())
 

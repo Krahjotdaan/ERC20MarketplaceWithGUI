@@ -23,4 +23,14 @@ MARKETPLACE_ABI = [{"anonymous":false,"inputs":[{"indexed":false,"internalType":
 W3 = Web3(HTTPProvider(PROVIDER))
 
 MARKETPLACE = W3.eth.contract(address=marketplace, abi=MARKETPLACE_ABI)
-APPLICATION = None
+
+Application = None
+
+def set_application(application):
+    global Application
+    Application = application
+    return Application
+
+def get_application():
+    global Application
+    return Application

@@ -1,61 +1,65 @@
 import time
 from threading import Thread
-from application.keys import PRINT_EVENT, MARKETPLACE, APPLICATION
+from application.keys import PRINT_EVENT, MARKETPLACE, get_application
 
 
 def log_loop_list_lot(event_filter, poll_interval):
+    application = get_application()
     while True:
         while not PRINT_EVENT:
             time.sleep(poll_interval)
         try:
             for event in event_filter.get_new_entries():
-                APPLICATION.ui.events_display.append(
-                    f"Новый лот\nid лота: {event['args']['lotId']}\nПродавец: {event['args']['owner']}\nАдрес токена: {event['args']['tokenAddress']}\nЦена за 1 единицу: {event['args']['price']}\nКоличество единиц: {event['args']['amount']}\n"
+                application.ui.events_display.append(
+                    f"Новый лот\nid лота: {event['args']['lotId']}\nПродавец: {event['args']['owner']}\nАдрес токена: {event['args']['tokenAddress']}\nЦена за 1 единицу: {event['args']['price']} wei\nКоличество единиц: {event['args']['amount']}\n"
                 )
             time.sleep(poll_interval)
-        except:
+        except ValueError:
             event_filter = MARKETPLACE.events.ListLot.create_filter(fromBlock="latest")
 
 
 def log_loop_cancel(event_filter, poll_interval):
+    application = get_application()
     while True:
         while not PRINT_EVENT:
             time.sleep(poll_interval)
         try:
             for event in event_filter.get_new_entries():
-                APPLICATION.ui.events_display.append(
+                application.ui.events_display.append(
                     f"Отмена продажи\nid лота: {event['args']['lotId']}\nКоличество единиц снятых с продажи: {event['args']['amount']}\n"
                 )
             time.sleep(poll_interval)
-        except:
+        except ValueError:
             event_filter = MARKETPLACE.events.Cancel.create_filter(fromBlock="latest")
 
 
 def log_loop_change_price(event_filter, poll_interval):
+    application = get_application()
     while True:
         while not PRINT_EVENT:
             time.sleep(poll_interval)
         try:
             for event in event_filter.get_new_entries():
-                APPLICATION.ui.events_display.append(
-                    f"Изменена цена\nid лота: {event['args']['lotId']}\nСтарая цена: {event['args']['oldPrice']}\nНовая цена: {event['args']['newPrice']}\n"
+                application.ui.events_display.append(
+                    f"Изменена цена\nid лота: {event['args']['lotId']}\nСтарая цена: {event['args']['oldPrice']} wei\nНовая цена: {event['args']['newPrice']} wei\n"
                 )
             time.sleep(poll_interval)
-        except:
+        except ValueError:
             event_filter = MARKETPLACE.events.ChangePrice.create_filter(fromBlock="latest")
 
 
 def log_loop_purchase(event_filter, poll_interval):
+    application = get_application()
     while True:
         while not PRINT_EVENT:
             time.sleep(poll_interval)
         try:
             for event in event_filter.get_new_entries():
-                APPLICATION.ui.events_display.append(
-                    f"Покупка\nid лота: {event['args']['lotId']}\nАдрес токена: {event['args']['tokenAddress']}\nЦена за 1 единицу: {event['args']['price']}\nКуплено единиц: {event['args']['amount']}\nПокупатель: {event['args']['customer']}\n"
+                application.ui.events_display.append(
+                    f"Покупка\nid лота: {event['args']['lotId']}\nАдрес токена: {event['args']['tokenAddress']}\nЦена за 1 единицу: {event['args']['price']} wei\nКуплено единиц: {event['args']['amount']}\nПокупатель: {event['args']['customer']}\n"
                 )
             time.sleep(poll_interval)
-        except:
+        except ValueError:
             event_filter = MARKETPLACE.events.Purchase.create_filter(fromBlock="latest")
 
 
