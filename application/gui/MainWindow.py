@@ -700,6 +700,6 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Вставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку &quot;Подтвердить&quot; для отправки транзакции.</p></body></html>"))
         self.lots.setTabText(self.lots.indexOf(self.cancel_tab), _translate("MainWindow", "Снять с продажи"))
         self.about_programm_button.setText(_translate("MainWindow", "О программе"))
-        self.marketplace_label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Контракт маркетплейса токенов ERC20: </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:16pt; color:#000000;\">0x398469Db4212E43eBDcf985ABEf04df1C0977017</span></p></body></html>"))
+        self.marketplace_label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Контракт маркетплейса токенов ERC20: </span><span style=\" font-family:\'Consolas,Courier New,monospace\'; font-size:16pt; color:#000000;\">0x2dccF3c027ceFCAC7359d98Bfc6Ab8Cfb3D9Daaa</span></p></body></html>"))
         self.connect_wallet_button.setText(_translate("MainWindow", "Установить кошелек"))
         self.wallet_label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">Кошелек: </span></p></body></html>"))

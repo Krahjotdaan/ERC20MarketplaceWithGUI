@@ -2,7 +2,7 @@ from web3 import Web3, HTTPProvider
 
 
 PROVIDER = "https://holesky.infura.io/v3/69f2d3f6cfc84b92a29e3f3bd1b4ec8b"
-marketplace = "0x398469Db4212E43eBDcf985ABEf04df1C0977017"
+marketplace = "0x2dccF3c027ceFCAC7359d98Bfc6Ab8Cfb3D9Daaa"
 
 true = True
 false = False
