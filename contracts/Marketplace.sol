@@ -30,12 +30,16 @@ contract Marketplace {
     /// @param tokenOwner - seller of this lot
     /// @param price - price per token unit
     /// @param amount - amount of token units
+    /// @param name, symbol, decimals - token metadata
     ///
     struct Lot {
-        address tokenAddress;
         address tokenOwner;
+        address tokenAddress;
         uint256 price;
         uint256 amount;
+        string name;
+        string symbol;
+        uint8 decimals;
     }
 
     /// @notice id of last lot
@@ -43,10 +47,10 @@ contract Marketplace {
     /// @notice contains all lots
     mapping(uint256 => Lot) public list;
 
-    event ListLot(uint256 lotId, address owner, address tokenAddress, uint256 indexed price, uint256 indexed amount);
-    event Cancel(uint256 lotId, uint256 indexed amount);
-    event ChangePrice(uint256 lotId, uint256 indexed oldPrice, uint256 indexed newPrice);
-    event Purchase(uint256 lotId, address tokenAddress, uint256 indexed price, uint256 indexed amount, address indexed customer);
+    event ListLot(uint256 lotId, address owner, address tokenAddress, string name, string symbol, uint8 decimals, uint256 price, uint256 amount);
+    event Cancel(uint256 lotId, uint256 amount);
+    event ChangePrice(uint256 lotId, uint256 oldPrice, uint256 newPrice);
+    event Purchase(uint256 lotId, address tokenAddress, uint256 price, uint256 amount, address customer);
 
     /// @notice function of putting an token up for sale
     ///
@@ -70,9 +74,24 @@ contract Marketplace {
         require(IERC20(_tokenAddress).transferFrom(msg.sender, address(this), _amount));
 
         ++lotId;
-        list[lotId] = Lot(_tokenAddress, msg.sender, _price, _amount);
+        list[lotId] = Lot(msg.sender, 
+            _tokenAddress,
+            _price,
+            _amount, 
+            IERC20(_tokenAddress).name(), 
+            IERC20(_tokenAddress).symbol(), 
+            IERC20(_tokenAddress).decimals()
+        );
 
-        emit ListLot(lotId, msg.sender, _tokenAddress, _price, _amount);
+        emit ListLot(lotId, 
+            msg.sender, 
+            _tokenAddress, 
+            IERC20(_tokenAddress).name(),
+            IERC20(_tokenAddress).symbol(),
+            IERC20(_tokenAddress).decimals(),
+            _price, 
+            _amount
+        );
 
         return lotId;
     }
@@ -143,8 +162,8 @@ contract Marketplace {
 
         Lot storage lot = list[_id];
 
-        require(msg.value >= lot.price * _amount, "Marketplace: not enough eth");
         require(lot.amount >= _amount, "Marketplace: too many tokens to purchase");
+        require(msg.value >= lot.price * _amount, "Marketplace: not enough eth"); 
         require(IERC20(lot.tokenAddress).transfer(msg.sender, _amount));
 
         payable(lot.tokenOwner).transfer(lot.price * _amount);
@@ -154,10 +173,10 @@ contract Marketplace {
             payable(msg.sender).transfer(msg.value - lot.price * _amount);
         }
 
+        emit Purchase(_id, lot.tokenAddress, lot.price, _amount, msg.sender);
+
         if (lot.amount == 0) {
             delete list[_id];
         }
-
-        emit Purchase(_id, lot.tokenAddress, lot.price, _amount, msg.sender);
     }
 }

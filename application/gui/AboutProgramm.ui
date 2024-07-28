@@ -2,11 +2,14 @@
 <ui version="4.0">
  <class>AboutProgramm</class>
  <widget class="QMainWindow" name="AboutProgramm">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>635</width>
+    <width>892</width>
     <height>562</height>
    </rect>
   </property>
@@ -39,11 +42,14 @@
     </property>
    </widget>
    <widget class="Line" name="line">
+    <property name="windowModality">
+     <enum>Qt::WindowModal</enum>
+    </property>
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>60</y>
-      <width>721</width>
+      <width>891</width>
       <height>20</height>
      </rect>
     </property>
@@ -59,7 +65,7 @@
      <rect>
       <x>20</x>
       <y>80</y>
-      <width>591</width>
+      <width>851</width>
       <height>471</height>
      </rect>
     </property>
@@ -141,6 +147,8 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;Данное децентрализованное приложение предназначено для взаимодействия с контрактом маркетплейса токенов ERC20. Файл контракта: https://github.com/Krahjotdaan/ERC20MarketplaceWithGUI/blob/main/contracts/Marketplace.sol&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;Для подключения к сети web3 использует провайдер Infura&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;Работает в тестовой сети Ethereum Holesky(chain id 17000). Для просмотра подробной информации о транзакциях перейдите на https://holesky.etherscan.io/&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;Файл контракта, децентрализованное приложение и графический интерфейс являются свободным программным обеспечением по MIT License&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
