@@ -173,10 +173,10 @@ contract Marketplace {
             payable(msg.sender).transfer(msg.value - lot.price * _amount);
         }
 
+        emit Purchase(_id, lot.tokenAddress, lot.price, _amount, msg.sender);
+
         if (lot.amount == 0) {
             delete list[_id];
         }
-
-        emit Purchase(_id, lot.tokenAddress, lot.price, _amount, msg.sender);
     }
 }
