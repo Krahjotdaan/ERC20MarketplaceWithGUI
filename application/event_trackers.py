@@ -1,6 +1,6 @@
 import time
 from threading import Thread
-from application.keys import MARKETPLACE, get_application
+from application.keys import MARKETPLACE, get_application, get_wallet
 from application.marketplace_functions import lot_info
 
 
@@ -29,17 +29,30 @@ def log_loop_cancel(event_filter, poll_interval):
                 application.ui.events_display.append(
                     f"Отмена продажи\nid лота: {event['args']['lotId']}\nКоличество единиц снятых с продажи: {event['args']['amount']}\n"
                 )
-                application.lots[str(event['args']['lotId'])][3] -= int(event['args']['amount'])
-                if application.lots[str(event['args']['lotId'])][3] == 0:
-                    row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[str(event['args']['lotId'])]).row()
+                id = str(event['args']['lotId'])
+                application.lots[id][3] -= int(event['args']['amount'])
+                if application.lots[id][3] == 0:
+                    application.ui.events_display.append("Лот полностью снят с продажи\n")
+                    row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[id]).row()
                     item = application.ui.list_all_lots.takeItem(row)
                     application.ui.list_all_lots.removeItemWidget(item)
                     application.ui.list_all_lots.update()
+                    if application.lots[id][0] == get_wallet():
+                        row1 = application.ui.list_my_lots.indexFromItem(application.my_lots_widgets[id]).row()
+                        item1 = application.ui.list_my_lots.takeItem(row1)
+                        application.ui.list_my_lots.removeItemWidget(item1)
+                        application.ui.list_my_lots.update()
+                    del application.lots[id]
+
                 else:
-                    row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[str(event['args']['lotId'])]).row()
-                    lot = application.lots[str(event['args']['lotId'])]
-                    application.ui.list_all_lots.item(row).setText(f"id: {str(event['args']['lotId'])}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+                    row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[id]).row()
+                    lot = application.lots[id]
+                    application.ui.list_all_lots.item(row).setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
                     application.ui.list_all_lots.update()
+                    if application.lots[id][0] == get_wallet():
+                        row1 = application.ui.list_my_lots.indexFromItem(application.my_lots_widgets[id]).row()
+                        application.ui.list_my_lots.item(row1).setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+                        application.ui.list_my_lots.update()
 
             time.sleep(poll_interval)
         except ValueError:
@@ -54,11 +67,16 @@ def log_loop_change_price(event_filter, poll_interval):
                 application.ui.events_display.append(
                     f"Изменена цена\nid лота: {event['args']['lotId']}\nСтарая цена: {event['args']['oldPrice']} wei\nНовая цена: {event['args']['newPrice']} wei\n"
                 )
-                application.lots[str(event['args']['lotId'])][2] = int(event['args']['newPrice'])
-                row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[str(event['args']['lotId'])]).row()
-                lot = application.lots[str(event['args']['lotId'])]
-                application.ui.list_all_lots.item(row).setText(f"id: {str(event['args']['lotId'])}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+                id = str(event['args']['lotId'])
+                application.lots[id][2] = int(event['args']['newPrice'])
+                row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[id]).row()
+                lot = application.lots[id]
+                application.ui.list_all_lots.item(row).setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
                 application.ui.list_all_lots.update()
+                if application.lots[id][0] == get_wallet():
+                    row1 = application.ui.list_my_lots.indexFromItem(application.my_lots_widgets[id]).row()
+                    application.ui.list_my_lots.item(row1).setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+                    application.ui.list_my_lots.update()
             time.sleep(poll_interval)
         except ValueError:
             event_filter = MARKETPLACE.events.ChangePrice.create_filter(fromBlock="latest")
@@ -72,17 +90,29 @@ def log_loop_purchase(event_filter, poll_interval):
                 application.ui.events_display.append(
                     f"Покупка\nid лота: {event['args']['lotId']}\nАдрес токена: {event['args']['tokenAddress']}\nЦена за 1 единицу: {event['args']['price']} wei\nКуплено единиц: {event['args']['amount']}\nПокупатель: {event['args']['customer']}\n"
                 )
-                application.lots[str(event['args']['lotId'])][3] -= int(event['args']['amount'])
-                if application.lots[str(event['args']['lotId'])][3] == 0:
-                    row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[str(event['args']['lotId'])]).row()
+                id = str(event['args']['lotId'])
+                application.lots[id][3] -= int(event['args']['amount'])
+                if application.lots[id][3] == 0:
+                    application.ui.events_display.append("Лот выкуплен\n")
+                    row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[id]).row()
                     item = application.ui.list_all_lots.takeItem(row)
                     application.ui.list_all_lots.removeItemWidget(item)
                     application.ui.list_all_lots.update()
+                    if application.lots[id][0] == get_wallet():
+                        row1 = application.ui.list_my_lots.indexFromItem(application.my_lots_widgets[id]).row()
+                        item1 = application.ui.list_my_lots.takeItem(row1)
+                        application.ui.list_my_lots.removeItemWidget(item1)
+                        application.ui.list_my_lots.update()
+                    del application.lots[id]
                 else:
-                    row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[str(event['args']['lotId'])]).row()
-                    lot = application.lots[str(event['args']['lotId'])]
-                    application.ui.list_all_lots.item(row).setText(f"id: {str(event['args']['lotId'])}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+                    row = application.ui.list_all_lots.indexFromItem(application.lot_widgets[id]).row()
+                    lot = application.lots[id]
+                    application.ui.list_all_lots.item(row).setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
                     application.ui.list_all_lots.update()
+                    if application.lots[id][0] == get_wallet():
+                        row1 = application.ui.list_my_lots.indexFromItem(application.my_lots_widgets[id]).row()
+                        application.ui.list_my_lots.item(row1).setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+                        application.ui.list_my_lots.update()
             time.sleep(poll_interval)
         except ValueError:
             event_filter = MARKETPLACE.events.Purchase.create_filter(fromBlock="latest")

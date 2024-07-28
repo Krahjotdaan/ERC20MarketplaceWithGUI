@@ -5,7 +5,7 @@ from application.gui.AboutProgramm import *
 from application.gui.SetWallet import *
 from application.gui.TxBrowser import *
 from application.gui.error_messages import *
-from application.keys import set_application, set_wallet
+from application.keys import set_application, set_wallet, get_wallet
 from application.event_trackers import thread_list_lot, thread_cancel, thread_change_price, thread_purchase
 from application.marketplace_functions import *
 
@@ -17,6 +17,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         self.lots = {}
         self.lot_widgets = {}
+        self.my_lots_widgets = {}
         self.purchase_id = 0
         self.purchase_amount = 0
         self.purchase_cost = 0
@@ -163,7 +164,7 @@ class MainWindow(QtWidgets.QMainWindow):
         lot = None
         try:
             lot = self.lots[str(self.change_price_id)]
-            if int(self.ui.price_change_price_input.text()) > 0 and int(self.ui.price_change_price_input.text()) <= lot[3]:
+            if int(self.ui.price_change_price_input.text()) > 0 and int(self.ui.price_change_price_input.text()) != lot[3]:
                 self.new_price = int(self.ui.price_change_price_input.text())
                 self.ui.change_price_browser.setText(f"""id: {self.change_price_id}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nСтарая цена: {lot[2]} wei\nНовая цена: {self.new_price} wei\n\n\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
                 self.ui.apply_change_price_button.setEnabled(True)
@@ -276,6 +277,12 @@ class MainWindow(QtWidgets.QMainWindow):
         lot_widget.setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
         self.lot_widgets[str(id)] = lot_widget
         self.ui.list_all_lots.addItem(lot_widget)
+        if lot[0] == get_wallet():
+            my_lot_widget = QtWidgets.QListWidgetItem()
+            my_lot_widget.setFont(font)
+            my_lot_widget.setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+            self.my_lots_widgets[str(id)] = my_lot_widget
+            self.ui.list_my_lots.addItem(my_lot_widget)
 
 
 class AboutProgrammWindow(QtWidgets.QMainWindow):
@@ -286,7 +293,7 @@ class AboutProgrammWindow(QtWidgets.QMainWindow):
 
 
 class SetWalletWindow(QtWidgets.QDialog):
-    def __init__(self, root):
+    def __init__(self, root : MainWindow):
         super(SetWalletWindow, self).__init__()
         self.ui = Ui_SetWallet()
         self.ui.setupUi(self)
@@ -300,6 +307,19 @@ class SetWalletWindow(QtWidgets.QDialog):
 
                 with open('wallet.txt', 'w') as fl:
                     fl.write(self.ui.wallet_input.text())
+
+                self.main.ui.list_my_lots.clear()
+                self.main.my_lots_widgets.clear()
+                for id in self.main.lots.keys():
+                    if self.main.lots[id][0] == get_wallet():
+                        lot = self.main.lots[id]
+                        my_lot_widget = QtWidgets.QListWidgetItem()
+                        font = QtGui.QFont()
+                        font.setPointSize(12)
+                        my_lot_widget.setFont(font)
+                        my_lot_widget.setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+                        self.main.my_lots_widgets[str(id)] = my_lot_widget
+                        self.main.ui.list_my_lots.addItem(my_lot_widget)
 
                 self.close()
             else:
@@ -327,17 +347,17 @@ def main():
     application = set_application(MainWindow())
     application.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
 
+    with open('wallet.txt', 'r') as fl:
+        w = fl.read()
+        application.ui.wallet_label.setText(f"Кошелек: {w}")
+        set_wallet(w)
+
     ids = lot_id()
     for i in range(1, ids + 1):
         lot = lot_info(i)
         if lot[3] > 0:
             application.lots[str(i)] = lot
             application.create_lot_widget(i, lot)
-
-    with open('wallet.txt', 'r') as fl:
-        w = fl.read()
-        application.ui.wallet_label.setText(f"Кошелек: {w}")
-        set_wallet(w)
 
     thread_list_lot.start()
     thread_cancel.start()
