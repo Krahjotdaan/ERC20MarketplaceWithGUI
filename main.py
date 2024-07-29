@@ -181,7 +181,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 incorrect_price(self)
 
         except ValueError:
-            incorrect_price()
+            incorrect_price(self)
         except KeyError:
             eras = QtWidgets.QErrorMessage(parent=self)
             eras.showMessage("Такого id нет")
