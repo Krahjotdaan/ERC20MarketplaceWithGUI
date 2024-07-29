@@ -5,6 +5,7 @@ from application.gui.AboutProgramm import *
 from application.gui.SetWallet import *
 from application.gui.TxBrowser import *
 from application.gui.SearchWindow import *
+from application.gui.SearchResults import *
 from application.gui.error_messages import *
 from application.keys import set_application, set_wallet, get_wallet
 from application.event_trackers import thread_list_lot, thread_cancel, thread_change_price, thread_purchase
@@ -93,7 +94,7 @@ class MainWindow(QtWidgets.QMainWindow):
             eras = QtWidgets.QErrorMessage(parent=self)
             eras.showMessage("Ошибка сети. Транзакция не отправлена")
         
-        del(private_key)
+        del private_key
         self.purchase_id = 0
         self.purchase_amount = 0
         self.purchase_cost = 0
@@ -205,7 +206,7 @@ class MainWindow(QtWidgets.QMainWindow):
         except TypeError:
             incorrect_private_key(self)
            
-        del(private_key)
+        del private_key
         self.change_price_id = 0
         self.new_price = 0
         self.ui.id_change_price_input.setText("")
@@ -260,7 +261,7 @@ class MainWindow(QtWidgets.QMainWindow):
         except TypeError:
             incorrect_private_key(self)
            
-        del(private_key)
+        del private_key
         self.cancel_id = 0
         self.cancel_amount = 0
         self.ui.id_cancel_input.setText("")
@@ -347,20 +348,89 @@ class TxBrowser(QtWidgets.QMainWindow):
 
 
 class SearchWindow(QtWidgets.QMainWindow):
-    def __init__(self, root):
+    def __init__(self, root : MainWindow):
         super(SearchWindow, self).__init__()
         self.ui = Ui_SearchWindow()
         self.ui.setupUi(self)
         self.main = root
 
-        def by_id_button_click(self):
-            pass
+    def by_id_button_click(self):
+        results = {}
+        try:
+            if int(self.ui.by_id_input.text()) > 0:
+                id = int(self.ui.by_id_input.text())
+                lot = self.main.lots[str(id)]
+                results[str(id)] = lot
+                self.show_results(id, results)
+            else:
+                incorrect_id(self)
+        except ValueError:
+            incorrect_id(self)
+        except KeyError:
+            eras = QtWidgets.QErrorMessage(parent=self)
+            eras.showMessage("Такого id нет")
 
-        def by_address_button_click(self):
-            pass
+    def by_address_button_click(self):
+        results = {}
+        address = ""
+        try:
+            if self.ui.by_address_input.text()[:2] == "0x":
+                address = self.ui.by_address_input.text()
+                for key in self.main.lots.keys():
+                    if self.main.lots[key][1] == address:
+                        results[key] = self.main.lots[key]
+            else:
+                incorrect_address(self)
+        except:
+            incorrect_address(self)
+        
+        if len(results.keys()) == 0:
+            eras = QtWidgets.QErrorMessage(parent=self)
+            eras.showMessage("Ничего не найдено")
+        else:
+            self.show_results(address, results)
 
-        def by_name_button_click(self):
-            pass
+    def by_name_button_click(self):
+        results = {}
+        name = ""
+        try:
+            name = self.ui.by_name_input.text()
+            for key in self.main.lots.keys():
+                if self.main.lots[key][4] == name:
+                    results[key] = self.main.lots[key]
+        except:
+            eras = QtWidgets.QErrorMessage(parent=self)
+            eras.showMessage("Некорректное название")
+        
+        if len(results.keys()) == 0:
+            eras = QtWidgets.QErrorMessage(parent=self)
+            eras.showMessage("Ничего не найдено")
+        else:
+            self.show_results(name, results)
+
+    def show_results(self, template, results):
+        self.search_results_window = SearchResultsWindow(template, results)
+        self.search_results_window.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+        self.search_results_window.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
+        self.search_results_window.show()
+
+
+class SearchResultsWindow(QtWidgets.QMainWindow):
+    def __init__(self, template, results : dict):
+        super(SearchResultsWindow, self).__init__()
+        self.ui = Ui_SearchResults()
+        self.ui.setupUi(self)
+        self.results = results
+        self.ui.label.setText(f"""Результаты поиска по "{str(template)}" """)
+
+        for id in results.keys():
+            lot = results[id]
+            lot_widget = QtWidgets.QListWidgetItem()
+            font = QtGui.QFont()
+            font.setPointSize(12)
+            lot_widget.setFont(font)
+            lot_widget.setText(f"id: {id}\nПродавец: {lot[0]}\nАдрес токена: {lot[1]}\nНазвание: {lot[4]}\nСимвол: {lot[5]}\nДесятичных токенов: {lot[6]}\nЦена за 1 единицу: {lot[2]} wei\nКоличество единиц: {lot[3]}\n")
+            self.ui.results.addItem(lot_widget)
 
 
 def main():

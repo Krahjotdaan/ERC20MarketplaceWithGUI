@@ -70,10 +70,15 @@ class Ui_SearchWindow(object):
         self.label_3.setGeometry(QtCore.QRect(10, 10, 181, 41))
         self.label_3.setObjectName("label_3")
         self.search_type.addTab(self.tab_3, "")
+
+        self.by_id_button.clicked.connect(SearchWindow.by_id_button_click)
+        self.by_address_button.clicked.connect(SearchWindow.by_address_button_click)
+        self.by_name_button.clicked.connect(SearchWindow.by_name_button_click)
+
         SearchWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(SearchWindow)
-        self.search_type.setCurrentIndex(1)
+        self.search_type.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(SearchWindow)
 
     def retranslateUi(self, SearchWindow):
