@@ -15,7 +15,7 @@ class Ui_AboutProgramm(object):
     def setupUi(self, AboutProgramm):
         AboutProgramm.setObjectName("AboutProgramm")
         AboutProgramm.setWindowModality(QtCore.Qt.WindowModal)
-        AboutProgramm.resize(892, 562)
+        AboutProgramm.resize(892, 650)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -38,7 +38,7 @@ class Ui_AboutProgramm(object):
         self.line.setObjectName("line")
         self.textBrowser_2 = QtWidgets.QTextBrowser(self.centralwidget)
         self.textBrowser_2.setEnabled(True)
-        self.textBrowser_2.setGeometry(QtCore.QRect(20, 80, 851, 471))
+        self.textBrowser_2.setGeometry(QtCore.QRect(20, 80, 851, 550))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(20)
@@ -77,7 +77,7 @@ class Ui_AboutProgramm(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Ubuntu\'; font-size:14pt;\">Данное децентрализованное приложение предназначено для взаимодействия с контрактом маркетплейса токенов ERC20. Файл контракта: https://github.com/Krahjotdaan/ERC20MarketplaceWithGUI/blob/main/contracts/Marketplace.sol</span></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Ubuntu\'; font-size:14pt;\">Данное децентрализованное приложение предназначено для взаимодействия с контрактом маркетплейса токенов ERC20. Файл контракта: https://github.com/Krahjotdaan/ERC20MarketplaceWithGUI/blob/main/contracts/Marketplace.sol Контракт маркетплейса: https://holesky.etherscan.io/address/0x2dccf3c027cefcac7359d98bfc6ab8cfb3d9daaa</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Ubuntu\'; font-size:14pt;\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Ubuntu\'; font-size:14pt;\">Для подключения к сети web3 использует провайдер Infura</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Ubuntu\'; font-size:14pt;\"><br /></p>\n"

@@ -4,6 +4,7 @@ from application.gui.MainWindow import *
 from application.gui.AboutProgramm import *
 from application.gui.SetWallet import *
 from application.gui.TxBrowser import *
+from application.gui.SearchWindow import *
 from application.gui.error_messages import *
 from application.keys import set_application, set_wallet, get_wallet
 from application.event_trackers import thread_list_lot, thread_cancel, thread_change_price, thread_purchase
@@ -38,6 +39,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.set_wallet_window.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
         self.set_wallet_window.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
         self.set_wallet_window.show()
+
+    def search_button_click(self):
+        self.search_window = SearchWindow(self)
+        self.search_window.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+        self.search_window.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
+        self.search_window.show()
 
     def count_cost_button_click(self):
         try:
@@ -263,10 +270,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.private_key_input_cancel.setEnabled(False)
         self.ui.cancel_browser.setText(f"""id:\nАдрес токена:\nНазвание:\nСимвол:\nДесятичных токенов:\nЦена за 1 единицу:wei\nБудет снято с продажи(ед. токенов):\nОстанется в продаже:\n\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
 
-    def search_button_click(self):
-        pass
-
-    def clear_filter_button_click(self):
+    def logs_journal_button_click(self):
         pass
     
     def create_lot_widget(self, id, lot):
@@ -342,6 +346,23 @@ class TxBrowser(QtWidgets.QMainWindow):
         self.ui.tx_info.setText(f"Хэш транзакции: {tx_hash}\nПолная информация: https://holesky.etherscan.io/tx/{tx_hash}")
 
 
+class SearchWindow(QtWidgets.QMainWindow):
+    def __init__(self, root):
+        super(SearchWindow, self).__init__()
+        self.ui = Ui_SearchWindow()
+        self.ui.setupUi(self)
+        self.main = root
+
+        def by_id_button_click(self):
+            pass
+
+        def by_address_button_click(self):
+            pass
+
+        def by_name_button_click(self):
+            pass
+
+
 def main():
     app = QtWidgets.QApplication([])
     application = set_application(MainWindow())
@@ -358,6 +379,8 @@ def main():
         if lot[3] > 0:
             application.lots[str(i)] = lot
             application.create_lot_widget(i, lot)
+
+    application.ui.last_id.setText(f"Id последнего лота: {ids}")
 
     thread_list_lot.start()
     thread_cancel.start()

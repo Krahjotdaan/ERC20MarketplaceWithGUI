@@ -1,7 +1,7 @@
 import time
 from threading import Thread
 from application.keys import MARKETPLACE, get_application, get_wallet
-from application.marketplace_functions import lot_info
+from application.marketplace_functions import lot_id, lot_info
 
 
 def log_loop_list_lot(event_filter, poll_interval):
@@ -16,6 +16,7 @@ def log_loop_list_lot(event_filter, poll_interval):
                 lot = lot_info(id)
                 application.lots[str(id)] = lot
                 application.create_lot_widget(id, lot)
+                application.ui.last_id.setText(f"Id последнего лота: {lot_id()}")
             time.sleep(poll_interval)
         except ValueError:
             event_filter = MARKETPLACE.events.ListLot.create_filter(fromBlock="latest")
