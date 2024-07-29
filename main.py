@@ -272,7 +272,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.cancel_browser.setText(f"""id:\nАдрес токена:\nНазвание:\nСимвол:\nДесятичных токенов:\nЦена за 1 единицу:wei\nБудет снято с продажи(ед. токенов):\nОстанется в продаже:\n\n\nВставьте в поле ниже приватный ключ. Приватный ключ нужен для подписи отправляемых транзакций. Программа никак не сохраняет его и не передает третьим лицам. Нажмите кнопку "Подтвердить" для отправки транзакции.""")
 
     def logs_journal_button_click(self):
-        os.startfile("logs.log")
+        try:
+            os.startfile("logs.log")
+        except FileNotFoundError:
+            open("logs.log", 'a').close()
+            os.startfile("logs.log")
     
     def create_lot_widget(self, id, lot):
         lot_widget = QtWidgets.QListWidgetItem()
