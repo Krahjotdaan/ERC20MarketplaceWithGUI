@@ -609,6 +609,7 @@ class Ui_MainWindow(object):
         self.count_cancel.clicked.connect(MainWindow.count_cancel_button_click)
         self.apply_cancel_button.clicked.connect(MainWindow.apply_cancel_button_click)
         self.search_button.clicked.connect(MainWindow.search_button_click)
+        self.logs_journal_button.clicked.connect(MainWindow.logs_journal_button_click)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
