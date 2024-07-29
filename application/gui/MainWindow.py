@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'MainWindow.ui'
+# Form implementation generated from reading ui file 'application/gui/MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -47,14 +47,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.search_by_id = QtWidgets.QLineEdit(self.horizontalLayoutWidget_2)
+        self.last_id = QtWidgets.QLabel(self.horizontalLayoutWidget_2)
         font = QtGui.QFont()
-        font.setPointSize(14)
-        self.search_by_id.setFont(font)
-        self.search_by_id.setInputMask("")
-        self.search_by_id.setText("")
-        self.search_by_id.setObjectName("search_by_id")
-        self.horizontalLayout_2.addWidget(self.search_by_id)
+        font.setPointSize(12)
+        self.last_id.setFont(font)
+        self.last_id.setObjectName("last_id")
+        self.horizontalLayout_2.addWidget(self.last_id)
         self.line_2 = QtWidgets.QFrame(self.centralwidget)
         self.line_2.setGeometry(QtCore.QRect(930, 70, 16, 661))
         self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
@@ -66,12 +64,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_3)
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.is_event_track = QtWidgets.QLabel(self.horizontalLayoutWidget_3)
+        self.label_5 = QtWidgets.QLabel(self.horizontalLayoutWidget_3)
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.is_event_track.setFont(font)
-        self.is_event_track.setObjectName("is_event_track")
-        self.horizontalLayout_3.addWidget(self.is_event_track)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName("label_5")
+        self.horizontalLayout_3.addWidget(self.label_5)
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(960, 118, 301, 581))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
@@ -90,7 +88,7 @@ class Ui_MainWindow(object):
         self.events_display.setObjectName("events_display")
         self.gridLayout.addWidget(self.events_display, 0, 0, 1, 1)
         self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(390, 80, 160, 41))
+        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(440, 80, 111, 41))
         self.horizontalLayoutWidget_4.setObjectName("horizontalLayoutWidget_4")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_4)
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -107,12 +105,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_5)
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.clear_filter_button = QtWidgets.QPushButton(self.horizontalLayoutWidget_5)
+        self.logs_journal_button = QtWidgets.QPushButton(self.horizontalLayoutWidget_5)
         font = QtGui.QFont()
         font.setPointSize(14)
-        self.clear_filter_button.setFont(font)
-        self.clear_filter_button.setObjectName("clear_filter_button")
-        self.horizontalLayout_5.addWidget(self.clear_filter_button)
+        self.logs_journal_button.setFont(font)
+        self.logs_journal_button.setObjectName("logs_journal_button")
+        self.horizontalLayout_5.addWidget(self.logs_journal_button)
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(20, 130, 911, 531))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
@@ -610,6 +608,8 @@ class Ui_MainWindow(object):
         self.apply_change_price_button.clicked.connect(MainWindow.apply_change_price_button_click)
         self.count_cancel.clicked.connect(MainWindow.count_cancel_button_click)
         self.apply_cancel_button.clicked.connect(MainWindow.apply_cancel_button_click)
+        self.search_button.clicked.connect(MainWindow.search_button_click)
+        self.logs_journal_button.clicked.connect(MainWindow.logs_journal_button_click)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -620,9 +620,10 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "ERC20Marketplace"))
-        self.is_event_track.setText(_translate("MainWindow", "Отслеживание событий"))
-        self.search_button.setText(_translate("MainWindow", "Найти"))
-        self.clear_filter_button.setText(_translate("MainWindow", "Убрать фильтр"))
+        self.last_id.setText(_translate("MainWindow", "Id последнего лота:"))
+        self.label_5.setText(_translate("MainWindow", "Отслеживание событий"))
+        self.search_button.setText(_translate("MainWindow", "Поиск"))
+        self.logs_journal_button.setText(_translate("MainWindow", "Журнал логов"))
         self.lots.setTabText(self.lots.indexOf(self.all_lots), _translate("MainWindow", "Все лоты"))
         self.lots.setTabText(self.lots.indexOf(self.my_lots), _translate("MainWindow", "Мои лоты"))
         self.label.setText(_translate("MainWindow", "Введите id лота:"))

@@ -92,17 +92,14 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLineEdit" name="search_by_id">
+      <widget class="QLabel" name="last_id">
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <pointsize>12</pointsize>
         </font>
        </property>
-       <property name="inputMask">
-        <string/>
-       </property>
        <property name="text">
-        <string/>
+        <string>Id последнего лота:</string>
        </property>
       </widget>
      </item>
@@ -132,17 +129,14 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QRadioButton" name="is_event_track">
+      <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
          <pointsize>14</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Отслеживать события</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
+        <string>Отслеживание событий</string>
        </property>
       </widget>
      </item>
@@ -178,9 +172,9 @@
    <widget class="QWidget" name="horizontalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>440</x>
       <y>80</y>
-      <width>160</width>
+      <width>111</width>
       <height>41</height>
      </rect>
     </property>
@@ -193,7 +187,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Найти</string>
+        <string>Поиск</string>
        </property>
       </widget>
      </item>
@@ -210,14 +204,14 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
-      <widget class="QPushButton" name="clear_filter_button">
+      <widget class="QPushButton" name="logs_journal_button">
        <property name="font">
         <font>
          <pointsize>14</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Убрать фильтр</string>
+        <string>Журнал логов</string>
        </property>
       </widget>
      </item>
@@ -1458,7 +1452,7 @@ p, li { white-space: pre-wrap; }
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Контракт маркетплейса токенов ERC20: &lt;/span&gt;&lt;span style=&quot; font-family:'Consolas,Courier New,monospace'; font-size:16pt; color:#000000;&quot;&gt;0x5F048189D7Ea76f6a7718bb771872B738508a471&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Контракт маркетплейса токенов ERC20: &lt;/span&gt;&lt;span style=&quot; font-family:'Consolas,Courier New,monospace'; font-size:16pt; color:#000000;&quot;&gt;0x2dccF3c027ceFCAC7359d98Bfc6Ab8Cfb3D9Daaa&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>

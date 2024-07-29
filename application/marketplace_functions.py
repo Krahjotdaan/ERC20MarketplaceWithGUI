@@ -1,4 +1,5 @@
 from application.keys import W3, MARKETPLACE, get_wallet
+from application.logger import *
 
 
 def lot_id():
@@ -21,6 +22,7 @@ def list_lot(token_address, price, amount, PRIVATE_KEY):
     })
     signed_transaction = W3.eth.account.sign_transaction(transaction, PRIVATE_KEY)
     tx_hash = W3.eth.send_raw_transaction(signed_transaction.rawTransaction)
+    add_log(f"Вызвана функция list_lot()\nПараметры:\nАдрес токена: {token_address}\nЦена: {price}\nКоличество: {amount}\nХэш транзакции: {W3.to_hex(tx_hash)}\n")
     
     return W3.to_hex(tx_hash)
 
@@ -35,6 +37,7 @@ def cancel(id, amount, PRIVATE_KEY):
     })
     signed_transaction = W3.eth.account.sign_transaction(transaction, PRIVATE_KEY)
     tx_hash = W3.eth.send_raw_transaction(signed_transaction.rawTransaction)
+    add_log(f"Вызвана функция cancel()\nПараметры:\nid: {id}\nКоличество: {amount}\nХэш транзакции: {W3.to_hex(tx_hash)}\n")
 
     return W3.to_hex(tx_hash)
 
@@ -49,6 +52,7 @@ def change_price(id, new_price, PRIVATE_KEY):
     })
     signed_transaction = W3.eth.account.sign_transaction(transaction, PRIVATE_KEY)
     tx_hash = W3.eth.send_raw_transaction(signed_transaction.rawTransaction)
+    add_log(f"Вызвана функция change_price()\nПараметры:\nid: {id}\nНовая цена: {new_price}\nХэш транзакции: {W3.to_hex(tx_hash)}\n")
     
     return W3.to_hex(tx_hash)
 
@@ -64,5 +68,7 @@ def purchase(id, amount, value, PRIVATE_KEY):
     })
     signed_transaction = W3.eth.account.sign_transaction(transaction, PRIVATE_KEY)
     tx_hash = W3.eth.send_raw_transaction(signed_transaction.rawTransaction)
+    add_log(f"Вызвана функция purchase()\nПараметры:\nid: {id}\nКоличество: {amount}\nПередано эфира: {value} wei\nХэш транзакции: {W3.to_hex(tx_hash)}\n")
+
 
     return W3.to_hex(tx_hash)
