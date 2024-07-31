@@ -17,6 +17,23 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        self.tray_icon = QtWidgets.QSystemTrayIcon(self)
+        self.tray_icon.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_ComputerIcon))
+        show_action = QtWidgets.QAction("Развернуть", self)
+        quit_action = QtWidgets.QAction("Выйти", self)
+        hide_action = QtWidgets.QAction("Свернуть", self)
+        show_action.triggered.connect(self.show)
+        hide_action.triggered.connect(self.hide)
+        quit_action.triggered.connect(os._exit)
+        tray_menu = QtWidgets.QMenu()
+        tray_menu.addAction(show_action)
+        tray_menu.addAction(hide_action)
+        tray_menu.addAction(quit_action)
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.setToolTip("ERC20Marketplace")
+        self.tray_icon.show()
+
         self.lots = {}
         self.lot_widgets = {}
         self.my_lots_widgets = {}
@@ -28,6 +45,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cancel_id = 0
         self.cancel_amount = 0
         self.remain_amount = 0
+
+    def closeEvent(self, event):
+        event.ignore()
+        self.hide()
+        self.tray_icon.showMessage(
+            "ERC20Marketplace",
+            "Приложение свернуто в трей",
+            QtWidgets.QSystemTrayIcon.Information,
+            2000
+        )
     
     def about_programm_button_click(self):
         self.about_programm_window = AboutProgrammWindow()
